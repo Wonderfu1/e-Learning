@@ -1,0 +1,1029 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.classyedit.css" />
+
+    <style>
+
+        body{
+            color:#666;
+        }
+
+        #drop {
+            border: 1px dashed #ccc;
+            width: 450px;
+            height:100px;
+            min-height: 35px;
+            margin: 10px auto;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            // display:box;
+            cursor:pointer;
+            vertical-align: middle; 
+            text-align:center;
+            display: flex;               /* establish flex container */
+            align-items: center;         /* vertically center flex items */
+        }
+
+        #status {
+            width:450px;
+            margin: 0 auto;
+        }
+
+        #list {
+            width:450px;
+            margin: 0 auto;
+        }
+
+        .msg-drop{
+            width:90%;
+            height:90%;
+            vertical-align:middle;
+            display: inline-block;
+        }
+
+        .msg-drop span {
+            height: 40px; /* image's height */
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .msg-drop-over { 
+            border-style: dashed;
+            border-color: yellow;
+            border-width: 5px;
+        }
+
+        .thumb {
+            width:33px;
+            height:33px;
+            float:left;
+            margin:3.5px;
+            border: 1px solid #ccc;
+        }
+
+        .fileCont{
+            display:block;
+            width:425px;
+            height:40px;
+            margin:2.5px;
+            float:left;
+        }
+
+        .fileSize{
+           text-align:right;
+            margin:2.5px;
+            font-size:12px;
+            padding-right: 10px;
+        }
+
+        .fileName{
+            float:left;
+            padding:2.5px;
+            font-weight:700;
+            text-transform: capitalize;    
+        }
+
+        .remove{
+            width:20px;
+            height:40px;
+            padding-top: 13px;
+            font-size: 18px;
+            float:left;
+        }
+
+        .progress {
+          height: 6px!important;
+          width: 380px;
+          margin-top: 5px;
+        }
+
+        .progress-bar {
+          -webkit-transition: width 1.5s ease-in-out;
+          transition: width 1.5s ease-in-out;
+        }
+
+        #fileBox{
+            display:none;
+        }
+
+        .sample {
+            padding-right:5px;
+            border: 2px solid #FF0000;
+            position: absolute;
+            z-index:1000;
+        }
+
+        .sample .close_btn {
+            cursor: pointer;
+            float:right;
+            position:absolute;
+            right:-15px;
+            top:-20px;
+    
+        }
+
+        .sample .number {
+            float:left;
+            background-color:yellow;
+            color:black;
+            padding:5px;
+        }
+
+        #question_wrapper_outer {
+	        width: 25%;
+	        background-color: rgba(255, 242, 145, 0.3);
+	        float: right;
+            margin-right: 2%;
+            padding: 20px;
+            border: dashed dashed yellow;
+            position: fixed;
+            top:0;
+            right:0;
+            height:100%;
+            overflow-y:scroll;
+            overflow-x:hidden
+        
+        }
+
+        #question_wrapper_inner {
+            display:inline-block;
+            border: 3px solid gray;
+            background-color: white;
+       }
+
+        #myCarousel {
+            float:left;
+            display: none;
+            width:70%
+        }
+
+        .carousel-control {
+            width: 4%
+        }
+
+
+        .btn-circle {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.428571429;
+            border-radius: 15px;
+            background-color:lightgray;
+        }
+
+
+
+
+input[type="radio"] + span:before,  /* Styling and positioning */
+input[type="checkbox"] + span:before {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';  /* Glyphicons replace the default elements */
+  font-weight: 400;
+  line-height: 1;
+}
+
+
+input[type="radio"] + span:before {
+
+}
+
+input[type="radio"]:checked + span:before {
+            position: absolute;
+            line-height: 0;
+            top: 30%;
+            left:5%;
+            content: "\e013";    /* glyphicon ok-circle */
+            color: #2196F3;
+            font-size:30px;
+  
+}
+
+
+.checkbox label, .radio label {
+    padding-left: 0px;
+}
+
+
+
+
+        .exam_wrapper > div {
+            clear: both;
+        }
+
+        .exam_question > * {
+            display:inline-block
+        }
+
+        [id^=extra_functions] > div {
+            display:inline-block;
+            color:black;
+
+        }
+
+        .extra_function_content > div {
+            clear: both;
+        }
+
+        .answer_text > div > * {
+            display: inline-block;
+            color:black;
+        }
+
+        .answer_number > * {
+            display: inline-block;
+        }
+
+        // Animated radios & checkboxes
+
+        .checkbox label:after, 
+        .radio label:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+        .checkbox .cr,
+        .radio .cr {
+            position: relative;
+            display: inline-block;
+            border: 1px solid #a9a9a9;
+            border-radius: .25em;
+            width: 1.3em;
+            height: 1.3em;
+            float: left;
+            margin-right: .5em;
+        }
+
+        .radio .cr {
+            border-radius: 50%;
+        }
+
+        .checkbox .cr .cr-icon,
+        .radio .cr .cr-icon {
+            position: absolute;
+            font-size: .8em;
+            line-height: 0;
+            top: 50%;
+            left: 20%;
+        }
+
+        .radio .cr .cr-icon {
+            margin-left: 0.04em;
+        }
+
+        .checkbox label input[type="checkbox"],
+        .radio label input[type="radio"] {
+            display: none;
+        }
+
+        .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+        .radio label input[type="radio"] + .cr > .cr-icon {
+            transform: scale(3) rotateZ(-20deg);
+            opacity: 0;
+            transition: all .3s ease-in;
+        }
+
+        .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+        .radio label input[type="radio"]:checked + .cr > .cr-icon {
+            transform: scale(1) rotateZ(0deg);
+            opacity: 1;
+        }
+
+        .checkbox label input[type="checkbox"]:disabled + .cr,
+        .radio label input[type="radio"]:disabled + .cr {
+            opacity: .5;
+        }
+
+        // Animated radios & checkboxes
+
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="js/jquery.classyedit.js"></script>
+
+    <script type="text/javascript">
+
+
+        var upload_files = [];
+        var questions = []; // 추출된 문제들 이미지
+        var elements = [];
+
+        var carousel_use = true;
+
+
+        $(window).load(function () {
+            $('#drop').click(function () {
+                console.log('click');
+                $('#fileBox').trigger('click');
+            });
+            //Remove item
+            $('.fileCont span').click(function () {
+                $(this).remove();
+            });
+
+            $('#question_wrapper_outer').bind("DOMSubtreeModified", function () {
+
+                $('#question_wrapper_outer').scrollTop($('#question_wrapper_outer')[0].scrollHeight - $('#question_wrapper_outer')[0].clientHeight);
+            });
+
+            $('#question_wrapper_outer').resizable({
+                handles: 'w',
+                minWidth: 200,
+                maxWidth: 400
+            });
+            
+
+            document.oncontextmenu = function () { return false; };
+
+
+            // carousel_use
+            if (carousel_use == true) {
+
+                $("#myCarousel").show();
+
+                $("#myCarousel").on('slid.bs.carousel', function () { // slide.bs.carousel
+
+                    currentIndex = $('div.active').index() + 1;
+
+                    console.log('The carousel has finished sliding from one item to another!', currentIndex);
+                });
+            }
+
+            $('#SaveQuestion').click(function () {
+                $("form").each(function () {
+                    var formID = $(this).attr('id');
+                    var formDetails = $('#' + formID);
+                });
+            });
+        });
+
+
+        if (window.FileReader) {
+            var drop;
+            addEventHandler(window, 'load', function () {
+                var status = document.getElementById('status');
+                drop = document.getElementById('drop');
+                var list = document.getElementById('list');
+
+                function cancel(e) {
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    }
+                    return false;
+                }
+
+                function over(e) {
+                    if(!$(".msg_drop").hasClass("msg-drop-over"));
+                        $(".msg-drop").addClass("msg-drop-over");
+
+                    cancel(e);
+                }
+
+                function leave(e) {
+                    if ($(".msg_drop").hasClass("msg-drop-over"));
+                        $(".msg-drop").removeClass("msg-drop-over");
+
+                    cancel(e);
+                }
+
+                // Tells the browser that we *can* drop on this target
+                addEventHandler(drop, 'dragover', over);
+                addEventHandler(drop, 'dragleave', leave);
+                addEventHandler(drop, 'dragenter', cancel);
+
+                addEventHandler(drop, 'drop', function (e) {
+                    e = e || window.event; // get window.event if e argument missing (in IE)   
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    } // stops the browser from redirecting off to the image.
+
+                    var dt = e.dataTransfer;
+                    var files = dt.files;
+
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        var reader = new FileReader();
+
+//                        var upload_files_idx = upload_files.push(reader) - 1; // 배열에서의 인덱스
+
+                        //attach event handlers here...
+
+                        reader.readAsDataURL(file);
+
+                        addEventHandler(reader, 'loadend', function (e, file) {
+
+                            if (file.type == "application/pdf") {
+
+                                filename = name.length > 1 ? name + ".pdf" : file.name
+                                , filetype = file.type
+                                , filesize = file.size
+                                , data = {
+                                    "filename": filename
+                                    , "filetype": filetype
+                                    , "filesize": filesize
+                                }
+
+                                data.file_base64 = e.target.result.split(/,/)[1];
+
+                                data.index = upload_files.push(data) - 1; // 배열에서의 인덱스
+
+                                getPageFromPDF(data); // 우선 페이지수를 가지고 온다.
+
+                                // reader.result.match(/\/Type[\s]*\/Page[^s]/g).length; // 이런 게 되는지는 잘 모름
+
+                            }
+                            else
+                            {
+                                var bin = this.result;
+                                var fileCont = document.createElement('div');
+                                fileCont.className = "fileCont";
+                                list.appendChild(fileCont);
+
+                                var fileNumber = list.getElementsByTagName('img').length + 1;
+                                status.innerHTML = fileNumber < files.length ? 'Loaded 100% of file ' + fileNumber + ' of ' + files.length + '...' : 'Done loading. processed ' + fileNumber + ' files.';
+
+                                var img = document.createElement("img");
+                                img.file = file;
+                                img.src = bin;
+                                img.className = "thumb";
+                                fileCont.appendChild(img);
+
+                                var newFile = document.createElement('div');
+                                newFile.innerHTML = file.name;
+                                newFile.className = "fileName";
+                                fileCont.appendChild(newFile);
+
+                                var fileSize = document.createElement('div');
+                                fileSize.className = "fileSize";
+                                fileSize.innerHTML = Math.round(file.size / 1024) + ' KB';
+                                fileCont.appendChild(fileSize);
+
+                                var progress = document.createElement('div');
+                                progress.className = "progress";
+                                progress.innerHTML = '<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="progress-bar progress-bar-success" role="progressbar" style="width: 100%"></div>';
+                                fileCont.appendChild(progress);
+
+                                var remove = document.createElement('div');
+                                remove.className = "remove";
+                                remove.innerHTML = '<span class="glyphicon glyphicon-remove"></div>';
+                                list.appendChild(remove);
+                            }
+
+
+                        }.bindToEventHandler(file));
+                    }
+                    return false;
+                });
+                
+                Function.prototype.bindToEventHandler = function bindToEventHandler() {
+                    var handler = this;
+                    var boundParameters = Array.prototype.slice.call(arguments);
+                    //create closure
+                    return function (e) {
+                        e = e || window.event; // get window.event if e argument missing (in IE)   
+                        boundParameters.unshift(e);
+                        handler.apply(this, boundParameters);
+                    }
+                };
+            });
+        } else {
+            document.getElementById('status').innerHTML = 'Your browser does not support the HTML5 FileReader.';
+        }
+
+
+        function addEventHandler(obj, evt, handler) {
+            if (obj.addEventListener) {
+                // W3C method
+                obj.addEventListener(evt, handler, false);
+            } else if (obj.attachEvent) {
+                // IE method.
+                obj.attachEvent('on' + evt, handler);
+            } else {
+                // Old school method.
+                obj['on' + evt] = handler;
+            }
+        }
+
+
+        //Not plugged yet
+        var bar = $('.progress-bar');
+        $(function () {
+            $(bar).each(function () {
+                bar_width = $(this).attr('aria-valuenow');
+                $(this).width(bar_width + '%');
+            });
+        });
+
+
+        function getPageFromPDF(data) {
+
+            pdf = data.file_base64;
+            index = data.index;
+
+            $.ajax({
+                type: 'POST',
+                url: 'CanvasSave.aspx/getPageFromPDF',
+                data: '{ "pdfData" : "' + pdf + '", "index" : ' + index + '}',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+
+                    result = JSON.parse(result.d)
+
+                    // var retVal = prompt("총" + result.total + " 페이지: 입력형식) 1,2-5", "");
+
+                    //*
+                    if (result.total > 10) {
+                        var retVal = prompt("총" + result.total + " 페이지: 입력형식) 1,2-5", "");
+                    }
+                    else {
+                        var retVal = result.total == 1 ? "1" : "1-" + result.total;
+                    }
+                    //*/
+
+
+                    var pages = [];
+
+                    // 1, 2-5, 6-8
+                    var _page = retVal.split(",")
+
+                    // [1], [2-5], [6-8]
+                    $.each(_page, function (i) {
+                        _p = this.split("-");
+                        if (_p.length == 1) {
+                            pages.push(parseInt(_p));
+                        } else {
+                            if (_p[1] > _p[0]) {
+                                for (i = _p[0]; i <= _p[1]; i++)
+                                    pages.push(parseInt(i));
+                            }
+                            else {
+                                for (i = _p[1]; i <= P[0]; i++)
+                                    pages.push(parseInt(i));
+                            }
+                        }
+                    });
+
+                    getImageFromPDF({ index: result.index, pages: pages });
+
+                }
+            });
+        }
+
+
+        function getImageFromPDF(data) {
+
+            pdf = upload_files[data.index].file_base64;
+            pages = data.pages
+
+            $.ajax({
+                type: 'POST',
+                url: 'CanvasSave.aspx/getImageFromPDF',
+                // data: "{ 'pdfData' : '" + pdf + "', 'pages' : '" + JSON.stringify(pages) + "'}",
+                data: JSON.stringify({ "pdfData" : pdf , "pages" : pages }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+
+                    result = JSON.parse(result.d)
+
+                    if (carousel_use == true) {
+                        $("#myCarousel").carousel("pause").removeData();
+                        var content_indi = "";
+                        var content_inner = "";
+                    }
+
+                    $.each(result, function (i) {
+
+                        var item = document.createElement('div');
+                        var canvas = document.createElement('canvas');
+
+                        item.appendChild(canvas);
+
+                        if (carousel_use == true) {
+                            $('#car_id').append('<li data-target="#myCarousel" data-slide-to="' + i + '"></li>');
+                            $('#car_inner').append($('<div class="item"></div>').append(item));
+                        } else {
+                            $('#wrapper').append(item);
+                        }
+
+
+                        var imageObj = new Image();
+
+                        imageObj.onload = function () {
+                            canvas.width = this.naturalWidth;
+                            canvas.height = this.naturalHeight;
+                            canvas.getContext('2d').drawImage(this, 0, 0);
+                        };
+
+                        imageObj.src = "data:image/jpg;base64," + this.image;
+
+                        initDraw(item);
+
+                    });
+
+                    if (carousel_use == true) {
+                        $('#car_inner .item').first().addClass('active');
+                        $('#car_indi > li').first().addClass('active');
+                        $('#myCarousel').carousel({
+                            pause: true,
+                            interval: false
+                        });
+                    }
+                }
+            });
+        }
+
+
+        function count_div_rect() {
+
+            $(".sample").each(function (i) {
+                $("span:first", this).html(i + 1);
+            });
+
+            $("#question_wrapper_inner span").each(function (j) {
+                $(this).html('문제 ' + (j + 1));
+            });
+
+        }
+
+        function initDraw(canvas) {
+
+            function setMousePosition(e) {
+                var ev = e || window.event; //Moz || IE
+                if (ev.pageX) { //Moz
+                    mouse.x = ev.pageX; // + window.pageXOffset;
+                    mouse.y = ev.pageY; // + window.pageYOffset;
+                } else if (ev.clientX) { //IE
+                    mouse.x = ev.clientX; // + document.body.scrollLeft;
+                    mouse.y = ev.clientY; // + document.body.scrollTop;
+                }
+            };
+
+            var mouse = {
+                x: 0,
+                y: 0,
+                startX: 0,
+                startY: 0
+            };
+
+            var element = null;
+            var carousel_top = document.querySelector("#myCarousel").offsetTop;
+            var _carousel_use = carousel_use;
+
+            canvas.onmousemove = function (e) {
+                setMousePosition(e);
+
+                if (element !== null) {
+                    element.style.width = Math.abs(mouse.x - mouse.startX) + 'px';
+                    element.style.height = Math.abs(mouse.y - mouse.startY) + 'px';
+                    // element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px';
+                    // element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px';
+                }
+            }
+
+            canvas.onclick = function (e) {
+
+                if (event.srcElement.className != "close_btn") {
+
+                    if (element !== null) {
+
+                        var id = elements.push(element);
+                        $(element).attr('data-id', id)
+
+                        // Canvas 에서 이미지 추출
+                        getImageFromCanvas({ c: this.querySelector('canvas'), e: element, id : id });
+
+                        element = null;
+                        canvas.style.cursor = "default";
+
+                        console.log("finsihed.");
+                    } else {
+                        console.log("begun.");
+                        mouse.startX = mouse.x;
+                        mouse.startY = mouse.y;
+                        element = document.createElement('div');
+                        element.innerHTML = '<span class="number">' + ($(".sample").length + 1) + '</span><span class="close_btn" onclick="deleteSampleRect(this)">x</span>';
+                        element.className = 'sample'
+                        element.style.display = "inline-block";
+                        element.style.left = mouse.x + 'px';
+                        element.style.top = mouse.y - (_carousel_use ? carousel_top : 0) + 'px'; // carousel 사용시 div가 relative 라서 좌표가 보정해줌
+                        canvas.appendChild(element)
+                        canvas.style.cursor = "crosshair";
+                    }
+                }
+            }
+
+
+            canvas.oncontextmenu = function () {
+
+                this.removeChild(element);
+                element = null;
+            } //set jquery element context menu
+
+            /*
+            $("#wrapper").contextmenu(function () {
+    
+                alert("Hello World!");
+    
+            });
+            */
+
+        }
+
+        function deleteSampleRect(self) {
+
+            self.parentNode.parentNode.removeChild(self.parentNode);
+            var id = $(self).parent().attr('data-id');
+            $("#question_wrapper_inner div[data-id='" + id + "']").remove();
+
+            count_div_rect();
+
+        }
+
+        function getImageFromCanvas(o) {
+
+            var image = new Image();
+
+            image.src = o.c.toDataURL("image/png");
+
+            var c = $(o.c);
+            var e = $(o.e);
+
+            x = e.position().left - c.position().left + 5; // div 두께때문에 오차가 있음.
+            y = e.position().top - c.position().top + 2;
+            w = e.width();
+            h = e.height();
+
+            var canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+
+            canvas.getContext('2d').drawImage(image, x, y, w, h, 0, 0, w, h);
+
+            image.src = canvas.toDataURL("image/png");
+
+            // image.setAttribute("data-id", o.id);
+
+            var no = questions.push({})-1;
+
+            // $('#question_wrapper_inner').append($('<div data-id="' + o.id + '">').append(image).append('<span style="width:50px;height:20px;text-align:center;text-size:11px;position:absolute;left:10px;background-color:#ff7a60;border-radius:4px;padding:0px 2px;">문제:' + $(".sample").length + '</span>'));
+
+            var question = { no: no, image: image.src };
+
+            // $("#QeustionTemplate").tmpl(question).appendTo("#question_wrapper_inner");
+
+            var new_Question = $("#QeustionTemplate").tmpl(question);
+
+            new Question(new_Question);
+
+        }
+
+    </script>
+
+</head>
+<body>
+
+
+    <div id="drop"> 
+        <div class="msg-drop">
+        <span style="vertical-align:middle" class="glyphicon glyphicon-cloud-upload cloud"></span>
+            Drop files here or click to browse.
+        </div>
+    </div>
+    <input id="fileBox" type="file"/>    
+    <div id="status"></div>
+    <div id="list"></div>
+
+
+
+
+    <!-- Bootstrap carousel -->
+
+    <div id="myCarousel" class="carousel slide">
+        <ol class="carousel-indicators" id="car_id"></ol>
+        <div class="carousel-inner" id="car_inner"></div>
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+
+    <!-- Bootstrap carousel -->
+
+    <div id="wrapper"></div>
+
+    <div id='question_wrapper_outer'>
+        <div id='question_wrapper_inner'>
+        </div>
+    </div>
+
+
+    <div>
+        <button id="SaveQuestion" type="button" class="btn btn-success btn-sm">저장</button>
+    </div>
+
+    <!-- javascript template -->
+    <script id="QeustionTemplate" type="text/x-jQuery-tmpl">
+        <div class="exam_wrapper">
+            <form name="form_${no}" id="form_${no}" >
+            <div class="exam_question">
+                <span>
+                    <img src="${image}" />
+                    <button id="extra_function_buttons" type="button" class="btn btn-success btn-sm" data-toggle="collapse" data-target="#extra_functions_${no}"><span class="glyphicon glyphicon-chevron-down"></span> Open</button>
+                </span>
+            </div>
+
+            <div id="extra_functions_${no}" class="collapse">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="extra_function[]" value="" data-toggle-selector="#extra_function_question_${no}">
+                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                    질문
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="extra_function[]" value="" data-toggle-selector="#extra_function_audio_file_${no}">
+                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                    오디오
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="extra_function[]" value="" data-toggle-selector="#extra_function_image_file_${no}">
+                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                    이미지
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="extra_function[]" value="" data-toggle-selector="#extra_function_explnation_${no}">
+                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                    지문
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="extra_function[]" value="" data-toggle-selector="#extra_function_explnation_later_${no}">
+                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                    설명
+                  </label>
+                </div>
+            </div>
+
+            <div class="extra_function_content">
+                <div style="display:none" id="extra_function_question_${no}"><label>질문</label><textarea class="classy-editor"></textarea></div>
+                <div style="display:none" id="extra_function_audio_file_${no}"><label>오디오</label><input type="file" /></div>
+                <div style="display:none" id="extra_function_image_file_${no}"><label>이미지</label><input type="file" /></div>
+                <div style="display:none" id="extra_function_explnation_${no}"><label>지문</label><textarea class="classy-editor"></textarea></div>
+                <div style="display:none" id="extra_function_explnation_later_${no}"><label>설명</label><textarea class="classy-editor"></textarea></div>
+            </div>
+
+            <div class="answer">
+    	        <div class="input-group">
+    		        <div id="radioBtn" class="btn-group">
+    			        <a class="btn btn-primary btn-sm active" data-toggle="exam_type" data-title="multiple-choice">객관식</a>
+    			        <a class="btn btn-primary btn-sm notActive" data-toggle="exam_type" data-title="multiple-choice-number">객관식(보기)</a>
+    			        <a class="btn btn-primary btn-sm notActive" data-toggle="exam_type" data-title="subjective">주관식</a>
+    		        </div>
+    		        <input type="hidden" name="exam_type" id="exam_type" value="multiple-choice">
+    	        </div>
+            </div>
+
+            <div class="answer_text">
+                <div style="display:none" class="subjective"><label>정답 </label><textarea class="classy-editor" name="answer_text[]"></textarea></div>
+
+                <div style="display:none" class="multiple-choice-number"><label>1. </label><textarea class="classy-editor" name="answer_text[]"></textarea></div>
+                <div style="display:none" class="multiple-choice-number"><label>2. </label><textarea class="classy-editor" name="answer_text[]"></textarea></div>
+                <div style="display:none" class="multiple-choice-number"><label>3. </label><textarea class="classy-editor" name="answer_text[]"></textarea></div>
+                <div style="display:none" class="multiple-choice-number"><label>4. </label><textarea class="classy-editor" name="answer_text[]"></textarea></div>
+            </div>
+
+            <div class="answer_number">
+                <span> 정답 </span>
+                <div data-toggle="buttons">
+                    <label style="position:relative" class="btn btn-default btn-circle btn-sm"><input type="radio" name="answer_number[]"><span></span>1</label>
+                    <label style="position:relative" class="btn btn-default btn-circle btn-sm"><input type="radio" name="answer_number[]"><span></span>2</label>
+                    <label style="position:relative" class="btn btn-default btn-circle btn-sm"><input type="radio" name="answer_number[]"><span></span>3</label>
+                    <label style="position:relative" class="btn btn-default btn-circle btn-sm"><input type="radio" name="answer_number[]"><span></span>4</label>
+                </div>
+                <span>
+                    <button type="button" class="add_field_button btn btn-info btn-circle btn-sm">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                </span>
+            </div>
+
+
+            </form>       
+        </div>
+    </script>
+    <!-- javascript template -->
+
+    <script>
+
+
+        function Question(obj) {
+
+            this.body = obj;
+
+            $(obj).appendTo("#question_wrapper_inner");
+
+            var max_fields = 8; //maximum input boxes allowed
+            var wrapper_answer_text = $(".answer_text", obj); //Fields wrapper
+            var wrapper_answer_number = $(".answer_number > div", obj); //Fields wrapper
+            var add_button = $(".add_field_button", obj); //Add button ID
+
+            $(obj).find('.classy-editor').ClassyEdit();
+
+            $(obj).change("input[name^=extra_function]", function () {
+                id = $(event.srcElement).data("toggle-selector");
+                $(id).toggle();
+
+                console.log('extra_function clicked');
+            })
+
+            $(add_button).click(function (e) { //on add input button click
+                e.preventDefault();
+
+                var x = $("input[name^=answer_number]", obj).length;
+
+                if (x < max_fields) { //max input box allowed
+                    x++; //text box increment
+
+                    var newDiv = document.createElement("div");
+
+                    newDiv.className = "multiple-choice-number";
+
+                    if ($("#exam_type", obj).val() != "multiple-choice-number")
+                        newDiv.style.display = "none";
+
+                    $(newDiv).append('<label>' + x + '. </label><textarea class="classy-editor" name="answer_text[]"></textarea><a href="#" class="remove_field"><span class="glyphicon glyphicon-remove"></span></a>');
+
+                    $(wrapper_answer_text).append(newDiv);
+
+                    $(newDiv).find('.classy-editor').ClassyEdit();
+
+                    $(wrapper_answer_number).append('<label style="position:relative" class="btn btn-default btn-circle btn-sm"><input type="radio" name="answer_number[]"><span></span>' + x + '</label>'); //add input box
+                }
+            });
+
+            $(wrapper_answer_text).on("click", ".remove_field", function (e) { //user click on remove text
+                e.preventDefault();
+
+                $(this).parent('div').remove();
+
+                $('label', wrapper_answer_number).last().remove();
+
+                $("textarea[name^=answer_text]", obj).each(function (i) {
+                    $(this).parent().children('label').html(i + '. '); // 주관식 답변이 있기때문에 인덱스에 1을 더하기 않았음.
+                });
+
+                $("input[name^=answer_number]", obj).each(function (i) {
+                    $(this).parent().children('label').html(i + 1);
+                });
+            })
+
+
+            $("#extra_functions", obj).on("hide.bs.collapse", function () {
+                $("#extra_function_buttons", obj).html('<span class="glyphicon glyphicon-chevron-down"></span> Open');
+            });
+
+            $("#extra_functions", obj).on("show.bs.collapse", function () {
+                $("#extra_function_buttons", obj).html('<span class="glyphicon glyphicon-chevron-up"></span> Close');
+            });
+
+            $('#radioBtn a', obj).on('click', function () {
+                var sel = $(this).data('title'); // multiple-choice, subjective
+                var tog = $(this).data('toggle');
+                $('#' + tog, obj).val(sel);
+
+                $('.answer_text > div', obj).show().not('.' + sel).hide();
+
+                sel == 'multiple-choice' || sel == 'multiple-choice-number' ? ($('.answer_number', obj).show(), $(add_button).show()) : ($('.answer_number', obj).hide(), $(add_button).hide());
+
+                $('a[data-toggle="' + tog + '"]', obj).not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+                $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]', obj).removeClass('notActive').addClass('active');
+            })
+
+
+        };
+
+    </script>
+
+</body>
+</html>

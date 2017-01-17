@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/jquery.classyedit.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style>
+
+      .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+      }
+
+      .btn-circle.btn-lg {
+        width: 50px;
+        height: 50px;
+        padding: 13px 13px;
+        font-size: 18px;
+        line-height: 1.33;
+        border-radius: 25px;
+      }
+
+        .exam_wrapper > div {
+            clear: both;
+        }
+
+        .exam_question > * {
+            display:inline-block
+        }
+
+        #extra_functions > div {
+            display:inline-block;
+        }
+
+        .extra_function_content > div {
+            clear: both;
+        }
+
+        .answer_text > div > * {
+            display: inline-block;
+        }
+
+        // Animated radios & checkboxes
+
+        .checkbox label:after, 
+        .radio label:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+        .checkbox .cr,
+        .radio .cr {
+            position: relative;
+            display: inline-block;
+            border: 1px solid #a9a9a9;
+            border-radius: .25em;
+            width: 1.3em;
+            height: 1.3em;
+            float: left;
+            margin-right: .5em;
+        }
+
+        .radio .cr {
+            border-radius: 50%;
+        }
+
+        .checkbox .cr .cr-icon,
+        .radio .cr .cr-icon {
+            position: absolute;
+            font-size: .8em;
+            line-height: 0;
+            top: 50%;
+            left: 20%;
+        }
+
+        .radio .cr .cr-icon {
+            margin-left: 0.04em;
+        }
+
+        .checkbox label input[type="checkbox"],
+        .radio label input[type="radio"] {
+            display: none;
+        }
+
+        .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+        .radio label input[type="radio"] + .cr > .cr-icon {
+            transform: scale(3) rotateZ(-20deg);
+            opacity: 0;
+            transition: all .3s ease-in;
+        }
+
+        .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+        .radio label input[type="radio"]:checked + .cr > .cr-icon {
+            transform: scale(1) rotateZ(0deg);
+            opacity: 1;
+        }
+
+        .checkbox label input[type="checkbox"]:disabled + .cr,
+        .radio label input[type="radio"]:disabled + .cr {
+            opacity: .5;
+        }
+
+        // Animated radios & checkboxes
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="js/jquery.classyedit.js"></script>
+
+
+</head>
+<body>
+
+
+    <div class="exam_wrapper">
+        <form>
+        <div class="exam_question">
+            <span>
+                <button id="extra_function_buttons" type="button" class="btn btn-success btn-sm" data-toggle="collapse" data-target="#extra_functions"><span class="glyphicon glyphicon-chevron-down"></span> Open</button>
+            </span>
+        </div>
+
+        <div id="extra_functions" class="collapse">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="extra_function[]" value="" data-toggle-selector="#extra_function_question">
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                질문
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="extra_function[]" value="" data-toggle-selector="#extra_function_audio_file">
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                오디오
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="extra_function[]" value="" data-toggle-selector="#extra_function_image_file">
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                이미지
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="extra_function[]" value="" data-toggle-selector="#extra_function_explnation">
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                지문
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="extra_function[]" value="" data-toggle-selector="#extra_function_explnation_later">
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                설명
+              </label>
+            </div>
+        </div>
+
+        <div class="extra_function_content">
+            <div style="display:none" id="extra_function_question"><label>질문</label><textarea class="classy-editor"></textarea></div>
+            <div style="display:none" id="extra_function_audio_file"><label>오디오</label><input type="file" /></div>
+            <div style="display:none" id="extra_function_image_file"><label>이미지</label><input type="file" /></div>
+            <div style="display:none" id="extra_function_explnation"><label>지문</label><textarea class="classy-editor"></textarea></div>
+            <div style="display:none" id="extra_function_explnation_later"><label>설명</label><textarea class="classy-editor"></textarea></div>
+        </div>
+
+        <div class="answer">
+    	    <div class="input-group">
+    		    <div id="radioBtn" class="btn-group">
+    			    <a class="btn btn-primary btn-sm active" data-toggle="exam_type" data-title="multiple-choice">객관식</a>
+    			    <a class="btn btn-primary btn-sm notActive" data-toggle="exam_type" data-title="multiple-choice-number">객관식(보기)</a>
+    			    <a class="btn btn-primary btn-sm notActive" data-toggle="exam_type" data-title="subjective">주관식</a>
+    		    </div>
+    		    <input type="hidden" name="exam_type" id="exam_type" value="multiple-choice">
+    	    </div>
+        </div>
+
+        <div class="answer_text">
+            <div style="display:none" class="subjective">정답 <textarea class="classy-editor" name="answer_text[]"></textarea></div>
+
+            <div style="display:none" class="multiple-choice-number"><label>1. </label><textarea class="classy-editor" name="answer_text[]"></textarea></div>
+            <div style="display:none" class="multiple-choice-number"><label>2. </label><textarea class="classy-editor" name="answer_text[]"></textarea></div>
+            <div style="display:none" class="multiple-choice-number"><label>3. </label><textarea class="classy-editor" name="answer_text[]"></textarea></div>
+            <div style="display:none" class="multiple-choice-number"><label>4. </label><textarea class="classy-editor" name="answer_text[]"></textarea></div>
+        </div>
+
+        <div class="answer_number" data-toggle="buttons">
+            <span> 정답 </span>
+            <label class="btn btn-default btn-circle btn-sm"><input type="radio" name="answer_number[]">1</label>
+            <label class="btn btn-default btn-circle btn-sm"><input type="radio" name="answer_number[]">2</label>
+            <label class="btn btn-default btn-circle btn-sm"><input type="radio" name="answer_number[]">3</label>
+            <label class="btn btn-default btn-circle btn-sm"><input type="radio" name="answer_number[]">4</label>
+        </div>
+
+        <span>
+            <button type="button" class="add_field_button btn btn-info btn-circle btn-sm">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+        </span>
+        </form>       
+    </div>
+
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+
+
+            $(".classy-editor").ClassyEdit();
+
+            $('.extra_function').change('click', function () {
+                $($(this).data('toggle-selector')).toggle(300);
+            })
+
+
+            $("input[name^=extra_function]").change('click', function () {
+                id = $(this).data("toggle-selector");
+                $(id).toggle();
+            })
+
+            // <-- 답 입력란 추가
+
+            var max_fields = 8; //maximum input boxes allowed
+            var wrapper_answer_text = $(".answer_text"); //Fields wrapper
+            var wrapper_answer_number = $(".answer_number"); //Fields wrapper
+            var add_button = $(".add_field_button"); //Add button ID
+
+
+            $(add_button).click(function (e) { //on add input button click
+                e.preventDefault();
+
+                var x = $("input[name^=answer_number]").length;
+
+                if (x < max_fields) { //max input box allowed
+                    x++; //text box increment
+
+                    var newDiv = document.createElement("div");
+
+                    newDiv.className = "multiple-choice-number";
+
+                    if ($("#exam_type").val() != "multiple-choice-number")
+                        newDiv.style.display = "none";
+
+                    $(newDiv).append('<label>' + x + '. </label><textarea class="classy-editor" name="answer_text[]"></textarea><a href="#" class="remove_field"><span class="glyphicon glyphicon-remove"></span></a>');
+ 
+                    $(wrapper_answer_text).append(newDiv);
+
+                    $(newDiv).find('.classy-editor').ClassyEdit();
+
+                    $(wrapper_answer_number).append('<label class="btn btn-default btn-circle btn-sm"><input type="radio" name="answer_number[]">' + x + '</label>'); //add input box
+                }
+            });
+
+            $(wrapper_answer_text).on("click", ".remove_field", function (e) { //user click on remove text
+                e.preventDefault();
+
+                $(this).parent('div').remove();
+
+                $('label', wrapper_answer_number).last().remove();
+
+                $("textarea[name^=answer_text]").each(function (i) {
+                    $(this).parent().children('label').html(i + '. '); // 주관식 답변이 있기때문에 인덱스에 1을 더하기 않았음.
+                });
+
+                $("input[name^=answer_number]").each(function (i) {
+                    $(this).parent().children('label').html(i+1);
+                });
+            })
+
+
+            // 답 입력란 추가 -->
+
+            $("#extra_functions").on("hide.bs.collapse", function () {
+                $("#extra_function_buttons").html('<span class="glyphicon glyphicon-chevron-down"></span> Open');
+            });
+
+            $("#extra_functions").on("show.bs.collapse", function () {
+                $("#extra_function_buttons").html('<span class="glyphicon glyphicon-chevron-up"></span> Close');
+            });
+
+            $('#radioBtn a').on('click', function () {
+                var sel = $(this).data('title'); // multiple-choice, subjective
+                var tog = $(this).data('toggle');
+                $('#' + tog).val(sel);
+
+                $('.answer_text > div').show().not('.' + sel).hide();
+
+                sel == 'multiple-choice' || sel == 'multiple-choice-number' ? $('.answer_number').show() : $('.answer_number').hide();
+
+                $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+                $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+            })
+        });
+
+    </script>
+
+</body>
+</html>
